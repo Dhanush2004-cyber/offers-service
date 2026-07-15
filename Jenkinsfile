@@ -2,6 +2,18 @@ pipeline {
 
     agent any
 
+    parameters {
+
+        choice(
+            name: 'BRANCH',
+            choices: [
+                'main',
+                'dev'
+            ],
+            description: 'Select the Git branch to deploy'
+        )
+
+    }
 
     stages {
 
@@ -23,8 +35,11 @@ pipeline {
 
                                     sshTransfer(
 
-                                        execCommand: '''
+                                        execCommand: """
+
                                             set -e
+
+                                            echo "Selected Branch : ${params.BRANCH}"
 
                                             echo "===== OFFERS SERVICE DEPLOYMENT STARTED ====="
 
@@ -32,7 +47,9 @@ pipeline {
 
                                             git fetch origin
 
-                                            git reset --hard origin/main
+                                            git checkout ${params.BRANCH}
+
+                                            git reset --hard origin/${params.BRANCH}
 
                                             npm install
 
@@ -46,29 +63,51 @@ pipeline {
                                             pm2 save
 
                                             echo "===== OFFERS SERVICE DEPLOYED SUCCESSFULLY ====="
-                                        '''
+
+                                            """
+
                                     )
+
                                 ]
+
                             )
+
                         ]
+
                     )
+
                 }
+
             }
+
         }
+
     }
+
     post {
+
         success {
+
             echo "======================================"
             echo "Offers Service Deployment Successful"
             echo "======================================"
+
         }
+
         failure {
+
             echo "======================================"
             echo "Offers Service Deployment Failed"
             echo "======================================"
+
         }
+
         always {
+
             cleanWs()
+
         }
+
     }
+
 }
