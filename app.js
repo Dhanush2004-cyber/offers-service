@@ -42,6 +42,13 @@ app.get("/api/offers", (req, res) => {
             validTill: "15-Oct-2026"
         }
 
+        {
+            id: 4,
+            title: "Zomato Gift Card",
+            description: "20% cashback using Zomato Food Card",
+            validTill: "16-Nov-2026"
+        }
+
     ];
 
     res.json({
