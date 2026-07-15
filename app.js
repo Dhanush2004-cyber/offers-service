@@ -40,7 +40,7 @@ app.get("/api/offers", (req, res) => {
             title: "Bank Cashback",
             description: "15% cashback using HDFC Credit Card",
             validTill: "15-Oct-2026"
-        }
+        },
 
         {
             id: 4,
