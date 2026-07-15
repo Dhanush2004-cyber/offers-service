@@ -26,7 +26,7 @@ app.get("/api/offers", (req, res) => {
             title: "10% OFF",
             description: "Get 10% discount on all electronics",
             validTill: "31-Dec-2026",
-            branch: "main"
+            branch: "dev"
         },
 
         {
